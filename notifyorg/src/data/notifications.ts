@@ -1,4 +1,4 @@
-import type { NotificationListItem, NotificationStat } from "../types/notifications"
+import type { AIRealtimeLine, NotificationStat } from "../types/notifications"
 
 export const notificationStats: NotificationStat[] = [
   {
@@ -27,60 +27,71 @@ export const notificationStats: NotificationStat[] = [
   },
 ]
 
-export const notificationFeed: NotificationListItem[] = [
+/** Estado inicial do feed ao vivo (IA); o componente simula progressão em tempo real. */
+export const aiRealtimeSeed: AIRealtimeLine[] = [
   {
-    id: "n1",
-    mode: "automatic",
+    id: "live-1",
     title: "Lembrete de prazo — Declaração IR",
-    preview:
-      "Mensagem personalizada por segmento; tom ajustado conforme histórico de abertura.",
+    preview: "Personalização por segmento; tom conforme histórico de abertura.",
     channels: ["email", "sms", "push"],
-    status: "sent",
-    timeLabel: "Há 18 min",
-    recipientsLabel: "42.800 destinatários",
+    status: "dispatching",
+    sent: 18_400,
+    total: 42_800,
     aiContext:
-      "IA selecionou canal SMS+Push para usuários sem abertura de e-mail nas últimas 72h.",
+      "IA priorizou SMS+Push para destinatários sem abertura de e-mail nas últimas 72h.",
   },
   {
-    id: "n2",
-    mode: "manual",
-    title: "Comunicado: manutenção do portal",
-    preview: "Texto fixo aprovado pela equipe jurídica; sem variação por segmento.",
-    channels: ["email"],
-    status: "scheduled",
-    timeLabel: "Amanhã, 08:00",
-    recipientsLabel: "Lista: servidores ativos",
-  },
-  {
-    id: "n3",
-    mode: "automatic",
+    id: "live-2",
     title: "Alerta de inadimplência — IPTU",
     preview: "Sequência em 3 toques com escalonamento automático de urgência.",
     channels: ["email", "push"],
-    status: "processing",
-    timeLabel: "Em fila",
-    recipientsLabel: "12.400 (segmento inadimplentes)",
-    aiContext: "Modelo priorizou horário comercial e evitou fins de semana.",
+    status: "queued",
+    sent: 0,
+    total: 12_400,
+    aiContext: "Janela comercial; fins de semana excluídos pelo modelo.",
   },
   {
-    id: "n4",
-    mode: "manual",
-    title: "Convocação assembleia ordinária",
-    preview: "Anexo PDF e link para confirmação de presença.",
-    channels: ["email", "sms"],
-    status: "draft",
-    timeLabel: "Rascunho",
-    recipientsLabel: "Conselho consultivo",
-  },
-  {
-    id: "n5",
-    mode: "automatic",
+    id: "live-3",
     title: "Onboarding — novo cadastro gov.br",
-    preview: "Boas-vindas dinâmicas com próximos passos conforme perfil declarado.",
+    preview: "Boas-vindas dinâmicas conforme perfil declarado no cadastro.",
     channels: ["email", "push"],
     status: "sent",
-    timeLabel: "Ontem, 14:22",
-    recipientsLabel: "1.902 novos usuários",
-    aiContext: "IA reduziu push em 30% para perfis com opt-out parcial.",
+    sent: 1_902,
+    total: 1_902,
+    aiContext: "Push reduzido em 30% para perfis com opt-out parcial.",
   },
 ]
+
+export const aiRealtimeTemplates: Omit<AIRealtimeLine, "id" | "sent">[] = [
+  {
+    title: "Convite — audiência pública digital",
+    preview: "Convocação segmentada por município e interesse declarado.",
+    channels: ["email", "sms"],
+    status: "queued",
+    total: 8_200,
+    aiContext: "IA limitou SMS ao horário permitido por política municipal.",
+  },
+  {
+    title: "Renovação de consentimento LGPD",
+    preview: "Reenvio apenas a quem não confirmou nos últimos 90 dias.",
+    channels: ["email"],
+    status: "queued",
+    total: 3_450,
+    aiContext: "Lista derivada do CRM; exclusões automáticas de contatos inválidos.",
+  },
+  {
+    title: "Lembrete — documentação pendente",
+    preview: "Gatilho após prazo configurável no fluxo automático.",
+    channels: ["email", "push"],
+    status: "queued",
+    total: 6_100,
+    aiContext: "Canal push apenas para usuários com app instalado e token ativo.",
+  },
+]
+
+let aiRealtimeIdSeq = 100
+
+export function nextAIRealtimeId() {
+  aiRealtimeIdSeq += 1
+  return `live-${aiRealtimeIdSeq}`
+}
