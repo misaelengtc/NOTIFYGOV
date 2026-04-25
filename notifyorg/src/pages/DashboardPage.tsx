@@ -1,4 +1,5 @@
 import { ChannelBreakdown } from "../components/dashboard/ChannelBreakdown"
+import { DashboardInsightChat } from "../components/dashboard/DashboardInsightChat"
 import { DeliveryChart } from "../components/dashboard/DeliveryChart"
 import { RecentAlerts } from "../components/dashboard/RecentAlerts"
 import { SummaryCards } from "../components/dashboard/SummaryCards"
@@ -17,6 +18,8 @@ export function DashboardPage() {
         </div>
 
         <SummaryCards />
+
+        <DashboardInsightChat />
 
         <div className="grid grid-cols-1 gap-gutter lg:grid-cols-3">
           <DeliveryChart />

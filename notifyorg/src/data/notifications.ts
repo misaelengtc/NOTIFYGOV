@@ -33,12 +33,12 @@ export const aiRealtimeSeed: AIRealtimeLine[] = [
     id: "live-1",
     title: "Lembrete de prazo — Declaração IR",
     preview: "Personalização por segmento; tom conforme histórico de abertura.",
-    channels: ["email", "sms", "push"],
+    channels: ["email", "sms", "whatsapp", "push"],
     status: "dispatching",
     sent: 18_400,
     total: 42_800,
     aiContext:
-      "IA priorizou SMS+Push para destinatários sem abertura de e-mail nas últimas 72h.",
+      "IA priorizou SMS, WhatsApp e Push para destinatários sem abertura de e-mail nas últimas 72h.",
   },
   {
     id: "live-2",
@@ -66,10 +66,11 @@ export const aiRealtimeTemplates: Omit<AIRealtimeLine, "id" | "sent">[] = [
   {
     title: "Convite — audiência pública digital",
     preview: "Convocação segmentada por município e interesse declarado.",
-    channels: ["email", "sms"],
+    channels: ["email", "sms", "whatsapp"],
     status: "queued",
     total: 8_200,
-    aiContext: "IA limitou SMS ao horário permitido por política municipal.",
+    aiContext:
+      "IA limitou SMS e WhatsApp ao horário permitido por política municipal; modelo de mensagem homologado.",
   },
   {
     title: "Renovação de consentimento LGPD",

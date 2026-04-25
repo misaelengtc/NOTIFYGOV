@@ -6,6 +6,8 @@ import { DashboardPage } from "./pages/DashboardPage"
 import { ManualNotificationPage } from "./pages/ManualNotificationPage"
 import { NotificationsPage } from "./pages/NotificationsPage"
 import { PlaceholderPage } from "./pages/PlaceholderPage"
+import { TemplatesPage } from "./pages/TemplatesPage"
+import { WorkflowsPage } from "./pages/WorkflowsPage"
 
 export function App() {
   const [activePage, setActivePage] = useState<AppPage>("dashboard")
@@ -17,6 +19,10 @@ export function App() {
       <NotificationsPage />
     ) : activePage === "sendNotification" ? (
       <ManualNotificationPage />
+    ) : activePage === "templates" ? (
+      <TemplatesPage />
+    ) : activePage === "workflows" ? (
+      <WorkflowsPage />
     ) : activePage === "campaigns" ? (
       <PlaceholderPage
         title="Campanhas"

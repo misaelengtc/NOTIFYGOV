@@ -32,8 +32,9 @@ export function ChannelBreakdown() {
         </p>
         <p className="text-sm text-slate-700">
           O canal <strong className="text-[#2C508C]">Email</strong> continua com a maior
-          taxa de entrega. Considere aumentar as campanhas via Push para usuários em
-          dispositivos móveis durante o horário comercial.
+          taxa de entrega. O <strong className="text-emerald-700">WhatsApp</strong> aproxima-se
+          da performance do SMS para lembretes com opt-in; combine com Push em horário comercial
+          em dispositivos móveis.
         </p>
       </div>
     </div>

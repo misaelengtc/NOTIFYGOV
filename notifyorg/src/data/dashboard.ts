@@ -85,6 +85,14 @@ export const channelRows: ChannelRow[] = [
     labelIconClass: "text-purple-500",
     valueClass: "text-purple-500",
   },
+  {
+    icon: "chat",
+    label: "WhatsApp",
+    pct: "89.4%",
+    barClass: "bg-emerald-600 w-[89.4%]",
+    labelIconClass: "text-emerald-600",
+    valueClass: "text-emerald-600",
+  },
 ]
 
 export const recentAlerts: AlertItem[] = [
@@ -128,6 +136,8 @@ export const sideNavItems: SideNavItem[] = [
   { page: "dashboard", label: "Visão Geral", icon: "dashboard" },
   { page: "notifications", label: "Notificação", icon: "notifications" },
   { page: "sendNotification", label: "Enviar Notificação", icon: "send" },
+  { page: "templates", label: "Templates", icon: "article" },
+  { page: "workflows", label: "Workflows", icon: "account_tree" },
   { page: "campaigns", label: "Campanhas", icon: "campaign" },
   { page: "audit", label: "Auditoria", icon: "history_edu" },
   { page: "apiSettings", label: "Configuração API", icon: "api" },

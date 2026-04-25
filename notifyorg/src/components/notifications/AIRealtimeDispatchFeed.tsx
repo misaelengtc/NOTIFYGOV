@@ -12,7 +12,15 @@ const channelIcon = {
   email: "mail",
   sms: "sms",
   push: "notifications_active",
+  whatsapp: "chat",
 } as const
+
+const channelTitle: Record<keyof typeof channelIcon, string> = {
+  email: "E-mail",
+  sms: "SMS",
+  push: "Push",
+  whatsapp: "WhatsApp",
+}
 
 const statusUi: Record<AIRealtimeStatus, { className: string; dotClass?: string }> = {
   queued: { className: "bg-slate-100 text-slate-600 border border-slate-200" },
@@ -145,8 +153,10 @@ export function AIRealtimeDispatchFeed() {
                   {n.channels.map((ch) => (
                     <span
                       key={ch}
-                      className="flex h-8 w-8 items-center justify-center rounded-lg bg-slate-100 text-slate-500"
-                      title={ch}
+                      className={`flex h-8 w-8 items-center justify-center rounded-lg bg-slate-100 ${
+                        ch === "whatsapp" ? "text-emerald-600" : "text-slate-500"
+                      }`}
+                      title={channelTitle[ch]}
                     >
                       <span className="material-symbols-outlined text-sm">{channelIcon[ch]}</span>
                     </span>

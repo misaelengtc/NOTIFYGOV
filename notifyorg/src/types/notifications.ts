@@ -14,7 +14,7 @@ export type AIRealtimeLine = {
   id: string
   title: string
   preview: string
-  channels: ("email" | "sms" | "push")[]
+  channels: ("email" | "sms" | "push" | "whatsapp")[]
   status: AIRealtimeStatus
   sent: number
   total: number

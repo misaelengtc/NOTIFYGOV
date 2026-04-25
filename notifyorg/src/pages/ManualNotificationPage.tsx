@@ -19,7 +19,12 @@ export function ManualNotificationPage() {
   )
   const [recipientTab, setRecipientTab] = useState<RecipientTab>("citizen")
   const [citizenQuery, setCitizenQuery] = useState("")
-  const [channels, setChannels] = useState({ email: true, sms: false, push: true })
+  const [channels, setChannels] = useState({
+    email: true,
+    sms: false,
+    whatsapp: false,
+    push: true,
+  })
   const [priority, setPriority] = useState<Priority>("normal")
   const [consentRequired, setConsentRequired] = useState(true)
 
@@ -29,6 +34,7 @@ export function ManualNotificationPage() {
     const active: string[] = []
     if (channels.email) active.push("Email")
     if (channels.sms) active.push("SMS")
+    if (channels.whatsapp) active.push("WhatsApp")
     if (channels.push) active.push("Push")
     return {
       recipients: recipientTab === "citizen" && citizenQuery.trim() ? "1 selecionado" : "—",
@@ -146,7 +152,7 @@ export function ManualNotificationPage() {
                   </span>
                   <input
                     className="w-full rounded-lg border border-slate-200 bg-white py-3 pl-12 pr-4 outline-none transition-all focus:border-[#5CA7DD] focus:ring-2 focus:ring-[#5CA7DD]/20"
-                    placeholder="Buscar por Nome, CPF ou ID do Cidadão..."
+                    placeholder="Buscar por CNI, Passaporte, NIF, Telemóvel."
                     type="search"
                     value={citizenQuery}
                     onChange={(e) => setCitizenQuery(e.target.value)}
@@ -251,6 +257,18 @@ export function ManualNotificationPage() {
                   <span className="ml-3 flex items-center gap-2 font-medium text-slate-700">
                     <span className="material-symbols-outlined text-sm text-slate-400">sms</span>
                     SMS (Celular)
+                  </span>
+                </label>
+                <label className="flex cursor-pointer items-center rounded-lg border border-slate-100 bg-slate-50 p-4 transition-colors hover:bg-slate-100">
+                  <input
+                    type="checkbox"
+                    className="h-5 w-5 rounded border-slate-300 text-[#2C508C] focus:ring-[#2C508C]"
+                    checked={channels.whatsapp}
+                    onChange={() => toggleChannel("whatsapp")}
+                  />
+                  <span className="ml-3 flex items-center gap-2 font-medium text-slate-700">
+                    <span className="material-symbols-outlined text-sm text-emerald-600">chat</span>
+                    WhatsApp (API oficial)
                   </span>
                 </label>
                 <label className="flex cursor-pointer items-center rounded-lg border border-slate-100 bg-slate-50 p-4 transition-colors hover:bg-slate-100">

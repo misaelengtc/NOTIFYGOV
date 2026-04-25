@@ -1,6 +1,7 @@
 import { AIModePanel } from "../components/notifications/AIModePanel"
 import { AIRealtimeDispatchFeed } from "../components/notifications/AIRealtimeDispatchFeed"
 import { ManualModePanel } from "../components/notifications/ManualModePanel"
+import { NotificationSearchHistory } from "../components/notifications/NotificationSearchHistory"
 import { NotificationStatsRow } from "../components/notifications/NotificationStatsRow"
 
 export function NotificationsPage() {
@@ -17,6 +18,8 @@ export function NotificationsPage() {
         </div>
 
         <NotificationStatsRow />
+
+        <NotificationSearchHistory />
 
         <div className="grid grid-cols-1 gap-gutter lg:grid-cols-3">
           <div className="space-y-gutter lg:col-span-2">
