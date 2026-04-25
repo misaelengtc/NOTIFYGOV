@@ -1,4 +1,11 @@
-export type RelevanceFolder = "urgente" | "administrativo" | "pagamentos" | "geral"
+/** Pastas por remetente / setor (Cabo Verde e serviços). */
+export type EntityFolder =
+  | "governo"
+  | "edec"
+  | "ads"
+  | "tme"
+  | "pagamentos"
+  | "outros"
 
 export type CitizenNotification = {
   id: string
@@ -6,10 +13,11 @@ export type CitizenNotification = {
   body: string
   entity: string
   receivedAt: string
-  folder: RelevanceFolder
+  folder: EntityFolder
   read: boolean
   requiresSignature: boolean
   hasOpenInvoice: boolean
-  invoiceAmount?: string
+  /** Valor em escudos cabo-verdianos (para fatura / pagamento com cartão). */
+  invoiceAmountCve?: number
   invoiceRef?: string
 }

@@ -2,7 +2,11 @@ import { Ionicons } from "@expo/vector-icons"
 import type { NativeStackScreenProps } from "@react-navigation/native-stack"
 import { Alert, Pressable, ScrollView, StyleSheet, Text, View } from "react-native"
 import { SafeAreaView } from "react-native-safe-area-context"
-import { FOLDER_LABELS, MOCK_NOTIFICATIONS } from "../data/notifications"
+import {
+  getFolderMeta,
+  invoiceDisplayAmount,
+  MOCK_NOTIFICATIONS,
+} from "../data/notifications"
 import type { HomeStackParamList } from "../navigation/types"
 import { colors } from "../theme/colors"
 
@@ -19,7 +23,8 @@ export function NotificationDetailScreen({ route, navigation }: Props) {
     )
   }
 
-  const folderLabel = FOLDER_LABELS[item.folder].label
+  const folderMeta = getFolderMeta(item.folder)
+  const folderLabel = folderMeta.label
 
   return (
     <SafeAreaView style={styles.safe} edges={["bottom"]}>
@@ -30,6 +35,9 @@ export function NotificationDetailScreen({ route, navigation }: Props) {
             <Text style={styles.folderPillText}>{folderLabel}</Text>
           </View>
         </View>
+        {folderMeta.subtitle ? (
+          <Text style={styles.folderSubtitle}>{folderMeta.subtitle}</Text>
+        ) : null}
         <Text style={styles.title}>{item.title}</Text>
         <Text style={styles.body}>{item.body}</Text>
 
@@ -69,7 +77,9 @@ export function NotificationDetailScreen({ route, navigation }: Props) {
             <Text style={styles.secondaryBtnText}>Como enviar documentos</Text>
           </Pressable>
 
-          {item.hasOpenInvoice && item.invoiceAmount && item.invoiceRef && (
+          {item.hasOpenInvoice &&
+            item.invoiceAmountCve != null &&
+            item.invoiceRef && (
             <Pressable
               style={({ pressed }) => [
                 styles.payBtn,
@@ -78,14 +88,14 @@ export function NotificationDetailScreen({ route, navigation }: Props) {
               onPress={() =>
                 navigation.navigate("Payment", {
                   notificationId: item.id,
-                  amount: item.invoiceAmount!,
+                  amount: invoiceDisplayAmount(item)!,
                   invoiceRef: item.invoiceRef!,
                 })
               }
             >
               <Ionicons name="card-outline" size={20} color={colors.onSecondaryContainer} />
               <Text style={styles.payBtnText}>
-                Pagar {item.invoiceAmount} — {item.invoiceRef}
+                Pagar {invoiceDisplayAmount(item)} — {item.invoiceRef}
               </Text>
             </Pressable>
           )}
@@ -110,6 +120,12 @@ const styles = StyleSheet.create({
     borderColor: colors.outlineVariant,
   },
   folderPillText: { fontSize: 12, fontWeight: "600", color: colors.onSurfaceVariant },
+  folderSubtitle: {
+    fontSize: 12,
+    color: colors.onSurfaceVariant,
+    marginBottom: 10,
+    marginTop: -4,
+  },
   title: {
     fontSize: 20,
     fontWeight: "700",

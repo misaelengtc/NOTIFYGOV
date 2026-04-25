@@ -9,23 +9,30 @@ import {
   View,
 } from "react-native"
 import { SafeAreaView } from "react-native-safe-area-context"
-import { FOLDER_LABELS, MOCK_NOTIFICATIONS } from "../data/notifications"
+import {
+  FOLDER_LABELS,
+  getFolderMeta,
+  MOCK_NOTIFICATIONS,
+  normalizeEntityFolder,
+} from "../data/notifications"
 import type { HomeStackParamList } from "../navigation/types"
 import { colors } from "../theme/colors"
-import type { CitizenNotification, RelevanceFolder } from "../types/notification"
+import type { CitizenNotification, EntityFolder } from "../types/notification"
 
 type Props = NativeStackScreenProps<HomeStackParamList, "NotificationsList">
 
-const FOLDER_ORDER: RelevanceFolder[] = [
-  "urgente",
-  "administrativo",
+const FOLDER_ORDER: EntityFolder[] = [
+  "governo",
+  "edec",
+  "ads",
+  "tme",
   "pagamentos",
-  "geral",
+  "outros",
 ]
 
 function formatDate(iso: string) {
   const d = new Date(iso)
-  return d.toLocaleDateString("pt-PT", {
+  return d.toLocaleDateString("pt-CV", {
     day: "2-digit",
     month: "short",
     hour: "2-digit",
@@ -34,7 +41,7 @@ function formatDate(iso: string) {
 }
 
 export function NotificationsScreen({ navigation }: Props) {
-  const [activeFolder, setActiveFolder] = useState<RelevanceFolder | "todos">(
+  const [activeFolder, setActiveFolder] = useState<EntityFolder | "todos">(
     "todos",
   )
 
@@ -63,8 +70,8 @@ export function NotificationsScreen({ navigation }: Props) {
         {item.body}
       </Text>
       <View style={styles.tags}>
-        <View style={[styles.tag, tagStyle(item.folder)]}>
-          <Text style={styles.tagText}>{FOLDER_LABELS[item.folder].short}</Text>
+        <View style={[styles.tag, tagStyle(normalizeEntityFolder(item.folder))]}>
+          <Text style={styles.tagText}>{getFolderMeta(item.folder).short}</Text>
         </View>
         {item.requiresSignature && (
           <View style={styles.tagOutline}>
@@ -74,7 +81,7 @@ export function NotificationsScreen({ navigation }: Props) {
         )}
         {item.hasOpenInvoice && (
           <View style={styles.tagPayment}>
-            <Text style={styles.tagPaymentText}>Fatura</Text>
+            <Text style={styles.tagPaymentText}>ECV</Text>
           </View>
         )}
       </View>
@@ -86,7 +93,8 @@ export function NotificationsScreen({ navigation }: Props) {
       <View style={styles.headerBand}>
         <Text style={styles.headline}>Caixa de entrada</Text>
         <Text style={styles.subtitle}>
-          Organizado por relevância. Toque num aviso para agir.
+          Pastas por entidade: Governo, EDEC, ADS e outras. Pagamentos em
+          escudos cabo-verdianos (ECV).
         </Text>
       </View>
       <View style={styles.chipsRow}>
@@ -138,13 +146,17 @@ export function NotificationsScreen({ navigation }: Props) {
   )
 }
 
-function tagStyle(folder: RelevanceFolder) {
+function tagStyle(folder: EntityFolder) {
   switch (folder) {
-    case "urgente":
-      return { backgroundColor: colors.errorContainer }
-    case "pagamentos":
+    case "governo":
+      return { backgroundColor: colors.primaryContainer + "55" }
+    case "edec":
+      return { backgroundColor: "#fff4e0" }
+    case "ads":
       return { backgroundColor: colors.secondaryContainer }
-    case "administrativo":
+    case "pagamentos":
+      return { backgroundColor: colors.tertiary + "22" }
+    case "tme":
       return { backgroundColor: colors.onPrimaryContainer + "33" }
     default:
       return { backgroundColor: colors.surfaceContainerHigh }
@@ -245,7 +257,7 @@ const styles = StyleSheet.create({
   },
   tagPaymentText: {
     fontSize: 12,
-    fontWeight: "600",
+    fontWeight: "700",
     color: colors.onPrimaryContainer,
   },
   empty: {
