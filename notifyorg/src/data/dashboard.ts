@@ -126,7 +126,9 @@ export const recentAlerts: AlertItem[] = [
 
 export const sideNavItems: SideNavItem[] = [
   { page: "dashboard", label: "Visão Geral", icon: "dashboard" },
-  { page: "notifications", label: "Notificação", icon: "send" },
+  { page: "notifications", label: "Notificação", icon: "notifications" },
+  { page: "sendNotification", label: "Enviar Notificação", icon: "send" },
   { page: "campaigns", label: "Campanhas", icon: "campaign" },
   { page: "audit", label: "Auditoria", icon: "history_edu" },
+  { page: "apiSettings", label: "Configuração API", icon: "api" },
 ]

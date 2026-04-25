@@ -1,1 +1,7 @@
-export type AppPage = "dashboard" | "notifications" | "campaigns" | "audit"
+export type AppPage =
+  | "dashboard"
+  | "notifications"
+  | "sendNotification"
+  | "campaigns"
+  | "audit"
+  | "apiSettings"
